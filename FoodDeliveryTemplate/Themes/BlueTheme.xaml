@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="FoodDeliveryTemplate.Themes.BlueTheme">
+
+    <!-- Material Palette Blue -->
+
+    <Color x:Key="PrimaryColorLight">#1976D2</Color> <!-- 700 -->
+    <Color x:Key="PrimaryColorDark">#2962FF</Color>  <!-- A700 -->
+
+    <Color x:Key="PrimaryLightColor">#2196F3</Color> <!-- 500 -->
+
+    <Color x:Key="TextColorOnPrimaryLight">White</Color>
+    <Color x:Key="TextColorOnPrimaryDark">#EEEEEE</Color>
+
+</ResourceDictionary>

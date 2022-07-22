@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:res="clr-namespace:FoodDeliveryTemplate.Resources"
+    xmlns:md="clr-namespace:FoodDeliveryTemplate.MaterialDesign"
+    xmlns:vm="clr-namespace:FoodDeliveryTemplate.ViewModels"
+    xmlns:selectors="clr-namespace:FoodDeliveryTemplate.Selectors"
+    xmlns:converter="clr-namespace:FoodDeliveryTemplate.Converters"
+    x:Class="FoodDeliveryTemplate.Views.ItemDetailPage"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+        Light={StaticResource BackgroundColorLight}}">
+
+    <ContentPage.Resources>
+
+        <ResourceDictionary>
+            
+            <DataTemplate x:Key="IngredientTemplate">
+
+                <Grid ColumnDefinitions="*"
+                        RowDefinitions="3,25,3"
+                        ColumnSpacing="0"
+                        Padding="10,0,10,0">
+
+                        <Label Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                TextDecorations="{Binding TextDecoration}"
+                                FontSize="Small"
+                                MaxLines="1"
+                                Grid.Row="1"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"/>
+
+                    <Grid.GestureRecognizers>
+
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                Command="{Binding Source={RelativeSource
+                                                AncestorType={x:Type vm:ItemDetailViewModel}},
+                                                Path=ChoiceItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+
+                    </Grid.GestureRecognizers>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="OptionTemplate">
+
+                <Grid ColumnDefinitions="Auto,*"
+                        RowDefinitions="3,25,3"
+                        Padding="10,0,10,0">
+
+                        <Label Text="{Binding RadioIcon}"
+                                TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                    Dark={StaticResource PrimaryColorDark}}"
+                                FontFamily="Material"
+                                FontSize="24"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"
+                                Grid.Column="0"
+                                Grid.Row="1"/>
+
+                        <Label Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                FontSize="Small"
+                                MaxLines="1"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"
+                                Grid.Column="1"
+                                Grid.Row="1"/>
+
+                    <Grid.GestureRecognizers>
+
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                Command="{Binding Source={RelativeSource
+                                                AncestorType={x:Type vm:ItemDetailViewModel}},
+                                                Path=ChoiceItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+
+                    </Grid.GestureRecognizers>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="ExtraTemplate">
+
+                <Grid ColumnDefinitions="Auto,*,Auto"
+                        RowDefinitions="3,25,3"
+                        Padding="10,0,10,0">
+
+                        <Label Text="{Binding CheckIcon}"
+                                TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                    Dark={StaticResource PrimaryColorDark}}"
+                                FontFamily="Material"
+                                FontSize="24"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"
+                                Grid.Column="0"
+                                Grid.Row="1"/>
+
+                        <Label Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                FontSize="Small"
+                                MaxLines="1"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"
+                                Grid.Column="1"
+                                Grid.Row="1"/>
+
+                        <Label Text="{Binding Price, StringFormat={x:Static res:AppResources.ShortenCurrency}}"
+                                TextColor="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                FontSize="Small"
+                                MaxLines="1"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center"
+                                Grid.Column="2"
+                                Grid.Row="1"/>
+
+                    <Grid.GestureRecognizers>
+
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                Command="{Binding Source={RelativeSource
+                                                AncestorType={x:Type vm:ItemDetailViewModel}},
+                                                Path=ChoiceItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+
+                    </Grid.GestureRecognizers>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <selectors:ChoiceItemDataTemplateSelector x:Key="choiceItemDataTemplateSelector"
+                IngredientTemplate="{StaticResource IngredientTemplate}"
+                OptionTemplate="{StaticResource OptionTemplate}"
+                ExtraTemplate="{StaticResource ExtraTemplate}"/>
+
+            <converter:FavoriteConverter x:Key="FavoriteConverter"/>
+
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+    <RelativeLayout>
+
+        <StackLayout Spacing="10"
+                      RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                      RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}">
+
+            <pv:PancakeView CornerRadius="0, 0, 20, 20">
+
+                <RelativeLayout>
+
+                    <Grid RowDefinitions="90,*,90"
+                            ColumnDefinitions="90,*,90"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                            Property=Width, Factor=1}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                            Property=Width, Factor=0.8}">
+
+                        <Image Source="{Binding Image}"
+                               Aspect="AspectFill"
+                               Grid.RowSpan="3"
+                               Grid.ColumnSpan="3"/>
+
+                        <pv:PancakeView Grid.Column="0"
+                            CornerRadius="25,25,25,25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            BackgroundColor="#60000000"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        
+                            <Label 
+                                    Text="{Binding IsFavorite, Converter={StaticResource FavoriteConverter}}"
+                                    TextColor="White"
+                                    FontFamily="Material"
+                                    FontSize="30"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand"
+                                    VerticalTextAlignment="Center"
+                                    HorizontalTextAlignment="Center"/>
+
+                            <pv:PancakeView.GestureRecognizers>
+
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                        Command="{Binding FavoriteCommand}" />
+
+                            </pv:PancakeView.GestureRecognizers>
+
+                        </pv:PancakeView>
+
+                        <pv:PancakeView Grid.Column="2"
+                            CornerRadius="25,25,25,25"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            BackgroundColor="#60000000"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                        
+                            <ImageButton Padding="10"
+                                         Command="{Binding CloseCommand}"
+                                         BackgroundColor="Transparent">
+
+                                <ImageButton.Source>
+
+                                    <FontImageSource Glyph="{x:Static md:Icons.Close}"
+                                                     FontFamily="Material"
+                                                     Color="WhiteSmoke"
+                                                     Size="60" />
+
+                                </ImageButton.Source>
+
+                            </ImageButton>
+
+                        </pv:PancakeView>
+
+                    </Grid>
+
+                </RelativeLayout>
+
+            </pv:PancakeView>
+
+            <Label Text="{Binding Name}"
+                    Style="{StaticResource BoldTitlePrimaryLabelStyle}"
+                    Margin="15, 0, 15, 0" />
+
+            <Label Text="{Binding Price, StringFormat={x:Static res:AppResources.ShortenCurrency}}"
+                   Style="{StaticResource LargePrimaryLabelStyle}"
+                   Margin="15,0,15,0"/>
+
+            <CollectionView ItemsSource="{Binding Choices}"
+                            ItemTemplate="{StaticResource choiceItemDataTemplateSelector}"
+                            IsGrouped="True"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            Margin="15,0,15,0"
+                            VerticalScrollBarVisibility="Never">
+
+                <CollectionView.ItemsLayout>
+
+                    <LinearItemsLayout Orientation="Vertical"
+                                       SnapPointsType="None"/>
+
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.GroupHeaderTemplate>
+
+                    <DataTemplate>
+
+                        <ContentView HeightRequest="40">
+
+                            <pv:PancakeView CornerRadius="10"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                                            Dark={StaticResource CardColorDark}}"
+                                        Padding="10,5,10,5">
+
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource BoldMediumPrimaryLabelStyle}"
+                                       VerticalTextAlignment="Center"/>
+
+                            </pv:PancakeView>
+
+                        </ContentView>
+
+                    </DataTemplate>
+
+                </CollectionView.GroupHeaderTemplate>
+
+                <CollectionView.Footer>
+
+                    <ContentView HeightRequest="80"/>
+
+                </CollectionView.Footer>
+
+            </CollectionView>
+
+        </StackLayout>
+
+        <pv:PancakeView Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-80}">
+
+            <Grid ColumnDefinitions="40, Auto, 40, *, 120"
+                  HeightRequest="40">
+
+                <ImageButton Grid.Column="0"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             Command="{Binding RemoveCommand}"
+                             BackgroundColor="Transparent">
+
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static md:Icons.RemoveCircle}"
+                                         FontFamily="Material"
+                                         Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                            Dark={StaticResource PrimaryColorDark}}"
+                                         Size="120" />
+                    </ImageButton.Source>
+
+                </ImageButton>
+
+                <Label Grid.Column="1"
+                       Text="{Binding Quantity}"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextColorLight},
+                            Dark={StaticResource PrimaryTextColorDark}}"
+                       FontSize="Large"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
+
+                <ImageButton Grid.Column="2"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Command="{Binding AddCommand}"
+                             BackgroundColor="Transparent">
+
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{x:Static md:Icons.AddCircle}"
+                                         FontFamily="Material"
+                                         Color="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                            Dark={StaticResource PrimaryColorDark}}"
+                                         Size="120" />
+                    </ImageButton.Source>
+
+                </ImageButton>
+
+                <Button Grid.Column="4"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Text="{x:Static res:AppResources.AddBasket}"
+                        Command="{Binding AddBasketCommand}"/>
+
+            </Grid>
+
+        </pv:PancakeView>
+
+    </RelativeLayout>
+
+</ContentPage>

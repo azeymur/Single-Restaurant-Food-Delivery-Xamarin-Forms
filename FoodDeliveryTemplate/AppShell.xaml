@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:FoodDeliveryTemplate.Views"
+       xmlns:md="clr-namespace:FoodDeliveryTemplate.MaterialDesign"
+       xmlns:res="clr-namespace:FoodDeliveryTemplate.Resources"
+       Title="FoodDeliveryTemplate"
+       x:Class="FoodDeliveryTemplate.AppShell">
+
+    <!--
+        The overall app visual hierarchy is defined here, along with navigation.
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
+    -->
+
+    <Shell.Resources>
+
+        <Style x:Key="BaseStyle" TargetType="Element">
+
+            <Setter Property="Shell.BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource TabBarBackgroundColorLight},
+                        Dark={StaticResource TabBarBackgroundColorDark}}" />
+
+            <Setter Property="Shell.ForegroundColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryTextColorLight},
+                        Dark={StaticResource PrimaryTextColorDark}}" />
+
+            <Setter Property="Shell.TitleColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryTextColorLight},
+                        Dark={StaticResource PrimaryTextColorDark}}" />
+
+            <Setter Property="Shell.TabBarTitleColor"
+                    Value="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                        Dark={StaticResource PrimaryColorDark}}" />
+
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{AppThemeBinding Light=#80000000, Dark=#80FFFFFF}" />
+
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{AppThemeBinding Light=#80000000, Dark=#80FFFFFF}" />
+
+            <Setter Property="Shell.DisabledColor"
+                    Value="{AppThemeBinding Light=#40000000, Dark=#40FFFFFF}" />
+
+            <Setter Property="Shell.TabBarDisabledColor"
+                    Value="{AppThemeBinding Light=#40000000, Dark=#40FFFFFF}" />
+
+        </Style>
+
+        <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+
+    </Shell.Resources>
+
+
+    <TabBar Route="tabbar">
+
+        <Tab Title="{x:Static res:AppResources.Home}" Route="home">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static md:Icons.Home}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+        </Tab>
+
+        <Tab Title="{x:Static res:AppResources.Basket}" Route="cart">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static md:Icons.ShoppingBasket}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:BasketPage}" />
+        </Tab>
+
+        <Tab Title="{x:Static res:AppResources.MyAccount}" Route="myaccount">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialOutlined" Glyph="{x:Static md:Icons.Person}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:MyAccountPage}" />
+        </Tab>
+
+    </TabBar>
+
+</Shell>

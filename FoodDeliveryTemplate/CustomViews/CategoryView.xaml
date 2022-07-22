@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FoodDeliveryTemplate.CustomViews.CategoryView"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:vm="clr-namespace:FoodDeliveryTemplate.ViewModels"
+    xmlns:model="clr-namespace:FoodDeliveryTemplate.Models"
+    x:DataType="model:Category"
+    Padding="0, 0, 15, 0">
+
+    <pv:PancakeView CornerRadius="20, 20, 20, 20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardColorLight},
+                        Dark={StaticResource CardColorDark}}">
+
+        <Grid RowDefinitions="*, Auto"
+                RowSpacing="0">
+
+            <Image Source="{Binding Image}"
+                    Aspect="AspectFill"
+                    WidthRequest="110"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"/>
+
+            <Label Text="{Binding Name}"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource TextColorOnPrimaryLight},
+                        Dark={StaticResource TextColorOnPrimaryDark}}"
+                    LineBreakMode="NoWrap"
+                    FontSize="Small"
+                    Grid.Row="1"
+                    HorizontalTextAlignment="Center"
+                    Padding="5"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                        Dark={StaticResource PrimaryColorDark}}"/>
+
+            <Grid.GestureRecognizers>
+
+                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                        Command="{Binding Source={RelativeSource
+                                                            AncestorType={x:Type vm:HomeViewModel}},
+                                                            Path=CategoryCommand}"
+                                        CommandParameter="{Binding .}" />
+
+            </Grid.GestureRecognizers>
+
+        </Grid>
+
+    </pv:PancakeView>
+
+</ContentView>

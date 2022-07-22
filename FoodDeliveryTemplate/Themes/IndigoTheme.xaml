@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="FoodDeliveryTemplate.Themes.IndigoTheme">
+
+    <!-- Material Palette Indigo -->
+
+    <Color x:Key="PrimaryColorLight">#3F51B5</Color> <!-- 500 -->
+    <Color x:Key="PrimaryColorDark">#536DFE</Color>  <!-- A200 -->
+
+    <Color x:Key="PrimaryLightColor">#7986CB</Color> <!-- 300 -->
+
+    <Color x:Key="TextColorOnPrimaryLight">#EEEEEE</Color>
+    <Color x:Key="TextColorOnPrimaryDark">#EEEEEE</Color>
+
+</ResourceDictionary>

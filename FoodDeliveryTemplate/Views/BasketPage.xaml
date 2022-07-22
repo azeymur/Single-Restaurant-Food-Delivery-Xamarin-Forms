@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodDeliveryTemplate.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:md="clr-namespace:FoodDeliveryTemplate.MaterialDesign"
+             xmlns:customview="clr-namespace:FoodDeliveryTemplate.CustomViews"
+             xmlns:res="clr-namespace:FoodDeliveryTemplate.Resources"
+             x:Class="FoodDeliveryTemplate.Views.BasketPage"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}"
+             x:DataType="vm:BasketViewModel"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding DeleteAllCommand}">
+            <ToolbarItem.IconImageSource>
+
+                <FontImageSource FontFamily="Material"
+                                 Glyph="{x:Static md:Icons.DeleteOutline}" />
+
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <RelativeLayout>
+
+        <RefreshView RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Width, Factor=1}"
+                     RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                        Property=Height, Factor=1}"
+                     Command="{Binding LoadItemsCommand}"
+                     IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+                     Padding="5">
+
+            <CollectionView ItemsSource="{Binding Items}"
+                            SelectionMode="None">
+
+                <CollectionView.ItemsLayout>
+
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="0" />
+
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+                        <customview:BasketLineItemView />
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+
+                    <Grid RowDefinitions="Auto, *, Auto">
+
+                        <ContentView />
+
+                        <StackLayout Padding="30"
+                                     Spacing="10"
+                                     Grid.Row="1"
+                                     VerticalOptions="Center">
+
+                            <Label Text="{x:Static res:AppResources.YourBasketEmpty}"
+                                   Style="{StaticResource MediumSecondaryLabelStyle}"
+                                   HorizontalTextAlignment="Center" />
+
+                        <Image Margin="20">
+
+                            <Image.Source>
+
+                                <FontImageSource Glyph="{x:Static md:Icons.Search}"
+                                                 FontFamily="Material"
+                                                 Color="{AppThemeBinding Light={StaticResource SecondaryTextColorLight},
+                                                    Dark={StaticResource SecondaryTextColorDark}}"
+                                                 Size="120" />
+
+                            </Image.Source>
+
+                        </Image>
+
+                        </StackLayout>
+
+                        <ContentView Grid.Row="2" />
+
+                    </Grid>
+
+                </CollectionView.EmptyView>
+
+                <CollectionView.Footer>
+                    <ContentView HeightRequest="134"/>
+                </CollectionView.Footer>
+
+            </CollectionView>
+
+        </RefreshView>
+
+        <pv:PancakeView CornerRadius="40, 40, 0, 0"
+                        Style="{StaticResource ButtonPanelStyle}"
+                        RelativeLayout.WidthConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Width, Factor=1}"
+                        RelativeLayout.YConstraint="{ConstraintExpression
+                            Type=RelativeToParent, Property=Height, Factor=1,
+                            Constant=-134}">
+
+            <pv:PancakeView.Shadow>
+                <pv:DropShadow />
+            </pv:PancakeView.Shadow>
+
+            <Grid RowDefinitions="Auto, Auto"
+                  ColumnDefinitions="*, *"
+                  RowSpacing="20">
+
+                <Label Text="{x:Static res:AppResources.Total}"
+                       Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                       HeightRequest="24"/>
+
+                <Label Grid.Column="1"
+                       Text="{Binding Total, StringFormat='${0:F2}'}"
+                       Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                       HorizontalTextAlignment="End"
+                       HeightRequest="24"/>
+
+                <Button Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Text="{x:Static res:AppResources.Checkout}"
+                        Command="{Binding CheckoutCommand}"
+                        HeightRequest="50"/>
+
+            </Grid>
+
+        </pv:PancakeView>
+
+    </RelativeLayout>
+
+</ContentPage>

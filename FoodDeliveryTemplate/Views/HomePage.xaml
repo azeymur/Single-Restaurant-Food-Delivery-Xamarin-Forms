@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodDeliveryTemplate.Views.HomePage"
+             xmlns:vm="clr-namespace:FoodDeliveryTemplate.ViewModels"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:model="clr-namespace:FoodDeliveryTemplate.Models"
+             xmlns:ctrl="clr-namespace:FoodDeliveryTemplate.Controls"
+             xmlns:customview="clr-namespace:FoodDeliveryTemplate.CustomViews"
+             xmlns:res="clr-namespace:FoodDeliveryTemplate.Resources"
+             xmlns:cvc="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource BackgroundColorDark},
+                Light={StaticResource BackgroundColorLight}}"
+             Title="{x:Static res:AppResources.YourBrand}">
+
+    <Shell.SearchHandler>
+
+        <ctrl:ItemSearchHandler Placeholder="{x:Static res:AppResources.EnterSearchTerm}"
+                                   ShowsResults="true">
+
+            <ctrl:ItemSearchHandler.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Label Text="{Binding Name}"
+                           Style="{StaticResource MediumSecondaryLabelStyle}"
+                           VerticalTextAlignment="Center"
+                           Padding="10" />
+
+                </DataTemplate>
+
+            </ctrl:ItemSearchHandler.ItemTemplate>
+
+        </ctrl:ItemSearchHandler>
+
+    </Shell.SearchHandler>
+
+    <RefreshView x:DataType="vm:HomeViewModel"
+                 Command="{Binding LoadPageCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+                 Padding="5">
+
+        <ScrollView Padding="10">
+
+            <StackLayout Spacing="15">
+
+                <pv:PancakeView CornerRadius="20, 20, 20, 20">
+
+                    <Grid RowDefinitions="90,*,Auto"
+                          ColumnDefinitions="90,*,90"
+                          HeightRequest="150">
+
+                        <cvc:CarouselViewControl ItemsSource="{Binding Banners}"
+                                      Grid.RowSpan="3"
+                                      Grid.ColumnSpan="3"
+                                      ShowIndicators="True"
+                                      IndicatorsTintColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                         Dark={StaticResource PrimaryColorDark}}">
+
+                            <cvc:CarouselViewControl.ItemTemplate>
+
+                                <DataTemplate x:DataType="model:Banner">
+
+                                    <Image Source="{Binding Image}"
+                                           Aspect="AspectFill">
+
+                                        <Image.GestureRecognizers>
+
+                                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                  Command="{Binding Source={RelativeSource
+                                                                    AncestorType={x:Type vm:HomeViewModel}}, Path=BannerCommand}"
+                                                                  CommandParameter="{Binding .}" />
+
+                                        </Image.GestureRecognizers>
+
+                                    </Image>
+
+                                </DataTemplate>
+
+                            </cvc:CarouselViewControl.ItemTemplate>
+
+                        </cvc:CarouselViewControl>
+
+                    </Grid>
+
+                </pv:PancakeView>
+
+                <CollectionView ItemsSource="{Binding Categories}"
+                                SelectionMode="None"
+                                HeightRequest="110"
+                                HorizontalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <customview:CategoryView />
+
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.Featured}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center" />
+
+                    <Label Text="{x:Static res:AppResources.SeeAll}"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                           TextDecorations="Underline"
+                           FontSize="Medium"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center">
+
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding SeeAllFeaturedCommand}" />
+
+                        </Label.GestureRecognizers>
+
+                    </Label>
+
+                </StackLayout>
+
+                <CollectionView ItemsSource="{Binding FeaturedItems}"
+                                SelectionMode="None"
+                                HeightRequest="250"
+                                HorizontalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+                            <customview:ItemView />
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.Favorite}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center" />
+
+                    <Label Text="{x:Static res:AppResources.SeeAll}"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                           TextDecorations="Underline"
+                           FontSize="Medium"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center">
+
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding SeeAllFavoriteCommand}" />
+
+                        </Label.GestureRecognizers>
+
+                    </Label>
+
+                </StackLayout>
+
+                <CollectionView ItemsSource="{Binding FavoriteItems}"
+                                SelectionMode="None"
+                                HeightRequest="250"
+                                HorizontalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+                            <customview:ItemView />
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <StackLayout Orientation="Horizontal">
+
+                    <Label Text="{x:Static res:AppResources.Popular}"
+                           Style="{StaticResource BoldMediumSecondaryLabelStyle}"
+                           HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center" />
+
+                    <Label Text="{x:Static res:AppResources.SeeAll}"
+                           TextColor="{AppThemeBinding Light={StaticResource PrimaryColorLight},
+                                Dark={StaticResource PrimaryColorDark}}"
+                           TextDecorations="Underline"
+                           FontSize="Medium"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center">
+
+                        <Label.GestureRecognizers>
+
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding SeeAllPopularCommand}" />
+
+                        </Label.GestureRecognizers>
+
+                    </Label>
+
+                </StackLayout>
+
+                <CollectionView ItemsSource="{Binding PopularItems}"
+                                SelectionMode="None"
+                                HeightRequest="250"
+                                HorizontalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+
+                        <DataTemplate>
+                            <customview:ItemView />
+                        </DataTemplate>
+
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </RefreshView>
+
+</ContentPage>

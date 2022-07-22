@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="FoodDeliveryTemplate.Themes.RedTheme">
+
+    <!-- Material Palette Red -->
+
+    <Color x:Key="PrimaryColorLight">#E53935</Color> <!-- 600 -->
+    <Color x:Key="PrimaryColorDark">#FF5252</Color>  <!-- A200 -->
+
+    <Color x:Key="PrimaryLightColor">#EF5350</Color> <!-- 400 -->
+
+    <Color x:Key="TextColorOnPrimaryLight">#EEEEEE</Color>
+    <Color x:Key="TextColorOnPrimaryDark">#212121</Color>
+
+</ResourceDictionary>
